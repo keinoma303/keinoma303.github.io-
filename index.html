@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Copilotの種類</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            font-size: 14px;
+        }
+        .slide-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 アスペクト比 */
+            overflow: hidden;
+        }
+        .slide {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 0;
+            padding: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            display: none;
+            overflow-y: auto;
+        }
+        .active-slide {
+            display: block;
+        }
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #0078d4, #50e6ff);
+        }
+        h2 {
+            color: #0078d4;
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #e6f2ff;
+            padding-bottom: 5px;
+        }
+        .subtitle {
+            color: #505050;
+            font-style: italic;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        ul {
+            padding-left: 20px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        li {
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+        .feature {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 4px solid #0078d4;
+        }
+        .feature h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #0078d4;
+            font-size: 1.1em;
+        }
+        .pricing {
+            background-color: #f0fff0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 10px;
+            border: 1px solid #ccebcc;
+            font-size: 0.9em;
+        }
+        .pricing p {
+            margin: 4px 0;
+        }
+        .screenshot {
+            background-color: #f2f2f2;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px dashed #ccc;
+        }
+        .screenshot p {
+            color: #666;
+            font-style: italic;
+            margin: 0;
+        }
+        .navigation {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .nav-button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            font-size: 0.9em;
+        }
+        .nav-button:hover {
+            background-color: #005a9e;
+        }
+        .nav-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .slide-counter {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #666;
+            font-size: 0.8em;
+        }
+        .resource-link {
+            margin-top: 10px;
+            padding: 6px 10px;
+            background-color: #e6f7ff;
+            border-radius: 4px;
+            border-left: 3px solid #1890ff;
+            font-size: 0.9em;
+        }
+        .resource-link a {
+            color: #1890ff;
+            text-decoration: none;
+        }
+        .resource-link a:hover {
+            text-decoration: underline;
+        }
+        .other-copilots {
+            margin-top: 10px;
+        }
+        .other-copilot-item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .other-copilot-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .other-copilot-item h3 {
+            color: #0078d4;
+            margin-bottom: 3px;
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+        .other-copilot-item p {
+            margin-top: 3px;
+            margin-bottom: 5px;
+        }
+        .other-copilot-item .resource-link {
+            margin-top: 5px;
+            padding: 4px 8px;
+        }
+        .content-wrapper {
+            padding-bottom: 40px; /* ナビゲーションボタンの高さ分の余白 */
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Microsoft Copilot (一般向け) -->
+        <div class="slide" id="slide1">
+            <div class="content-wrapper">
+                <h2>Microsoft Copilot (一般向け)</h2>
+                <p class="subtitle">Windowsやウェブブラウザで利用できる一般的なAIアシスタント</p>
+                
+                <div class="feature">
+                    <h3>主な特徴</h3>
+                    <ul>
+                        <li><strong>利用場所</strong>: ウェブブラウザ（copilot.microsoft.com）やWindows 11のタスクバーから直接アクセス可能</li>
+                        <li><strong>基本機能</strong>: 質問応答、文章生成、情報検索、画像生成（DALL-E）、テキスト分析</li>
+                        <li><strong>連携サービス</strong>: Bing検索エンジンと連携し、最新の情報にアクセス可能</li>
+                        <li><strong>マルチモーダル対応</strong>: テキスト入力だけでなく、画像アップロードからの質問や音声入力にも対応</li>
+                        <li><strong>複数言語サポート</strong>: 日本語を含む多言語に対応し、翻訳機能も搭載</li>
+                        <li><strong>料金</strong>: 基本機能は無料で利用可能（画像生成などの高度な機能は制限あり）</li>
+                    </ul>
+                </div>
+                
+                <div class="resource-link">
+                    <p><strong>詳細情報</strong>: <a href="https://www.microsoft.com/ja-jp/microsoft-copilot/for-individuals" target="_blank">Microsoft Copilot を始めましょう</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Microsoft Copilot for Windows -->
+        <div class="slide" id="slide2">
+            <div class="content-wrapper">
+                <h2>Microsoft Copilot for Windows</h2>
+                <p class="subtitle">Windows 11に組み込まれたAIアシスタント</p>
+                
+                <div class="feature">
+                    <h3>主な特徴</h3>
+                    <ul>
+                        <li><strong>統合環境</strong>: Windows 11のオペレーティングシステムに深く統合されたAIアシスタント</li>
+                        <li><strong>アクセス方法</strong>: タスクバーのCopilotアイコンまたはWin+Cキーボードショートカットで起動</li>
+                        <li><strong>OSレベルの操作</strong>: Windowsの設定変更やシステム操作をAIの支援で実行可能</li>
+                        <li><strong>アプリ連携</strong>: 画面上の情報を認識し、コンテキストに応じた支援を提供</li>
+                        <li><strong>スクリーンショット解析</strong>: 画面のスクリーンショットを撮影し、内容について質問や操作が可能</li>
+                        <li><strong>Windows設定の最適化</strong>: パフォーマンス改善やバッテリー設定など、使用状況に応じた最適化提案</li>
+                    </ul>
+                </div>
+                
+                <div class="resource-link">
+                    <p><strong>詳細情報</strong>: <a href="https://www.microsoft.com/Ja-jp/windows/ai-features" target="_blank">Microsoft Copilot for Windows 公式情報</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Microsoft Copilot Pro -->
+        <div class="slide" id="slide3">
+            <div class="content-wrapper">
+                <h2>Microsoft Copilot Pro</h2>
+                <p class="subtitle">より高度な機能を備えた有料版サービス</p>
+                
+                <div class="feature">
+                    <h3>主な特徴</h3>
+                    <ul>
+                        <li><strong>高性能AI</strong>: 最新かつ高性能なAIモデル（GPT-4o）への優先アクセス</li>
+                        <li><strong>生成AI機能強化</strong>: 高品質な画像生成（DALL-E 3）の1日あたりの生成数が100枚まで増加</li>
+                        <li><strong>Microsoft 365連携</strong>: Word、Excel、PowerPoint、Outlookなどのアプリ内でCopilot機能が利用可能</li>
+                        <li><strong>優先利用権</strong>: 需要の高い時間帯でも優先的にサービスを利用可能（レスポンス速度向上）</li>
+                        <li><strong>高度なプロンプト機能</strong>: より複雑な指示や長文の処理が可能</li>
+                        <li><strong>GPTs作成機能</strong>: 特定の目的に特化したカスタムCopilotを作成可能</li>
+                        <li><strong>Designers機能</strong>: より高度なデザイン生成と編集機能</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <p><strong>料金</strong>: 月額2,000円（税別）</p>
+                    <p><strong>注意点</strong>: Microsoft 365アプリ内での利用には、Microsoft 365 Personal（1,284円/月）または Family（1,284円/月）のサブスクリプションも別途必要</p>
+                </div>
+                
+                <div class="resource-link">
+                    <p><strong>詳細情報</strong>: <a href="https://support.microsoft.com/ja-jp/copilot-pro" target="_blank">Copilot Pro の使用を開始する</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Microsoft Copilot for Microsoft 365 -->
+        <div class="slide" id="slide4">
+            <div class="content-wrapper">
+                <h2>Microsoft Copilot for Microsoft 365</h2>
+                <p class="subtitle">Wordやexcel、PowerPointなどのMicrosoft 365アプリと統合されたビジネス向けバージョン</p>
+                                
+                <div class="feature">
+                    <h3>主な特徴</h3>
+                    <ul>
+                        <li><strong>アプリ統合</strong>: Word、Excel、PowerPoint、Outlook、Teams、SharePoint、OneDriveなどのMicrosoft 365アプリ内で直接利用可能</li>
+                        <li><strong>企業データ連携</strong>: 組織内のデータやドキュメント、SharePointサイト、Teams会話を参照してコンテキストを理解</li>
+                        <li><strong>セキュリティ対応</strong>: 企業のセキュリティポリシーやコンプライアンス要件に準拠したデータ保護機能</li>
+                        <li><strong>チーム連携</strong>: 会議の要約や議事録作成、タスク管理などをAI支援</li>
+                        <li><strong>大規模言語モデル</strong>: 最先端のGPT-4モデルを活用し、複雑な業務タスクを処理</li>
+                        <li><strong>管理機能</strong>: IT管理者向けの展開・管理・監視ツール</li>
+                        <li><strong>コンプライアンス</strong>: GDPR、HIPAA、ISO 27001などの国際規格に準拠</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <p><strong>料金</strong>: 企業向けライセンス（ユーザーあたり月額約3,000円〜）</p>
+                    <p><strong>前提条件</strong>: Microsoft 365 E3/E5、Business Standard/Premium、またはOffice 365 E3/E5のライセンスが必要</p>
+                </div>
+                
+                <div class="resource-link">
+                    <p><strong>詳細情報</strong>: <a href="https://www.microsoft.com/ja-jp/microsoft-365/copilot" target="_blank">Microsoft 365 Copilot で新しい生産性を引き出しましょう</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- そのほかのMicrosoft Copilot -->
+        <div class="slide" id="slide5">
+            <div class="content-wrapper">
+                <h2>そのほかのMicrosoft Copilot</h2>
+                <p class="subtitle">特定の業務や専門分野向けのAIアシスタント</p>
+                
+                <div class="other-copilots">
+                    <div class="other-copilot-item">
+                        <h3>Microsoft Copilot Studio</h3>
+                        <p>企業が独自のAIアシスタントを視覚的インターフェースでノーコード開発できるプラットフォーム。</p>
+                        <div class="resource-link">
+                            <p><a href="https://www.microsoft.com/ja-jp/microsoft-copilot/microsoft-copilot-studio" target="_blank">Microsoft Copilot Studio 公式サイト</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="other-copilot-item">
+                        <h3>GitHub Copilot</h3>
+                        <p>プログラマー向けのコード補完・生成ツールで、主要な開発環境に統合してリアルタイムでコードを提案。</p>
+                        <div class="resource-link">
+                            <p><a href="https://azure.microsoft.com/ja-jp/products/github/copilot" target="_blank">GitHub Copilot 公式サイト</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="other-copilot-item">
+                        <h3>Microsoft Copilot for Security</h3>
+                        <p>セキュリティ専門家向けのAIアシスタントで、脅威検出、インシデント対応、セキュリティ分析を支援。</p>
+                        <div class="resource-link">
+                            <p><a href="https://www.microsoft.com/ja-jp/security/business/ai-machine-learning/microsoft-security-copilot" target="_blank">Microsoft Copilot for Security 公式サイト</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="other-copilot-item">
+                        <h3>Microsoft Copilot for Service</h3>
+                        <p>カスタマーサポート向けAIアシスタントで、問い合わせ対応の効率化と顧客満足度向上を実現。</p>
+                        <div class="resource-link">
+                            <p><a href="https://www.microsoft.com/ja-jp/microsoft-365/copilot/copilot-for-service" target="_blank">Microsoft Copilot for Service 公式情報</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="other-copilot-item">
+                        <h3>Microsoft Copilot for Sales</h3>
+                        <p>営業担当者向けAIアシスタントで、顧客情報分析、提案書作成、商談準備などの営業活動を支援。</p>
+                        <div class="resource-link">
+                            <p><a href="https://www.microsoft.com/ja-jp/microsoft-365/copilot/copilot-for-sales" target="_blank">Microsoft Copilot for Sales 公式情報</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button id="prevBtn" class="nav-button" disabled>前へ</button>
+            <button id="nextBtn" class="nav-button">次へ</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">スライド 1 / 5</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            let currentSlide = 0;
+            
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideCounter = document.getElementById('slideCounter');
+            
+            // 最初のスライドを表示
+            slides[currentSlide].classList.add('active-slide');
+            updateCounter();
+            
+            // 前へボタンのイベントリスナー
+            prevBtn.addEventListener('click', function() {
+                if (currentSlide > 0) {
+                    slides[currentSlide].classList.remove('active-slide');
+                    currentSlide--;
+                    slides[currentSlide].classList.add('active-slide');
+                    updateNavButtons();
+                    updateCounter();
+                }
+            });
+            
+            // 次へボタンのイベントリスナー
+            nextBtn.addEventListener('click', function() {
+                if (currentSlide < totalSlides - 1) {
+                    slides[currentSlide].classList.remove('active-slide');
+                    currentSlide++;
+                    slides[currentSlide].classList.add('active-slide');
+                    updateNavButtons();
+                    updateCounter();
+                }
+            });
+            
+            // ナビゲーションボタンの状態を更新
+            function updateNavButtons() {
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === totalSlides - 1;
+            }
+            
+            // カウンター表示を更新
+            function updateCounter() {
+                slideCounter.textContent = `スライド ${currentSlide + 1} / ${totalSlides}`;
+            }
+        });
+    </script>
+</body>
+</html>
